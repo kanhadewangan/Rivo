@@ -39,10 +39,9 @@ class Users {
         name: newUser.name,
         email: newUser.email,
         password: newUser.password,
-        phone: newUser.phone,
-        password: newUser.password,
+        phone: newUser.phone.toString(),
         created_at: newUser.created_at,
-        update_at: newUser.update_at,
+        updated_at: newUser.update_at,
       })
       .returning();
     return newUser;
@@ -63,9 +62,9 @@ class Users {
         userData.name,
         userData.email,
         userData.password,
-        userData.phone,
+        parseInt(userData.phone),
         userData.created_at,
-        userData.update_at,
+        userData.updated_at,
       );
     }
     return null;
