@@ -15,6 +15,13 @@
       "when": 1779858575965,
       "tag": "0001_next_paladin",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1779862371362,
+      "tag": "0002_lush_william_stryker",
+      "breakpoints": true
     }
   ]
 }
