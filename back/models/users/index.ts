@@ -9,6 +9,7 @@ class Users {
   id: number;
   name: string;
   email: string;
+  password: string;
   phone: number;
   created_at: Date;
   update_at: Date;
@@ -17,6 +18,7 @@ class Users {
     id: number,
     name: string,
     email: string,
+    password: string,
     phone: number,
     created_at: Date,
     update_at: Date,
@@ -24,17 +26,21 @@ class Users {
     this.id = id;
     this.name = name;
     this.email = email;
+    this.password = password;
     this.phone = phone;
     this.created_at = created_at;
     this.update_at = update_at;
+
   }
-  createUser(name: string, email: string, phone: number): Users {
-    const newUser = new Users(0, name, email, phone, new Date(), new Date());
+  createUser(name: string, email: string, password: string, phone: number): Users {
+    const newUser = new Users(0, name, email, password, phone, new Date(), new Date());
     db.insert(users)
       .values({
         name: newUser.name,
         email: newUser.email,
-        number: newUser.phone,
+        password: newUser.password,
+        phone: newUser.phone,
+        password: newUser.password,
         created_at: newUser.created_at,
         update_at: newUser.update_at,
       })
@@ -56,7 +62,8 @@ class Users {
         userData.id,
         userData.name,
         userData.email,
-        userData.number,
+        userData.password,
+        userData.phone,
         userData.created_at,
         userData.update_at,
       );
