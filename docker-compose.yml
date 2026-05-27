@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+   db: 
+     image: postgres
+     container_name: postgres_rivo
+     environment:
+       POSTGRES_USER: user
+       POSTGRES_PASSWORD: password
+       POSTGRES_DB: db_name
+     ports:
+       - "5432:5432"
+     volumes:
+       - db_data:/var/lib/postgresql/rivo
+
+volumes:
+  db_data:
