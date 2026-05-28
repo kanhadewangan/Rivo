@@ -1,0 +1,37 @@
+## Add a CI workflow for testing and building the application
+name: CI
+  
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v1
+      - name: Install dependencies
+        run: bun install
+      - name: Run tests
+        run: npx playwright test
+    #   - name: Build the application
+    #     run: bun run build
+    #   - name: Build and push Docker image
+    #     uses: docker/build-push-action@v2
+    #     with:
+    #       context: .
+    #       push: true
+        #   tags: user/repository:tag
+        # - name: Deploy to server
+        #   uses: easingthemes/ssh-deploy@v2
+        #   with:
+        #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        #     remote-user: ${{ secrets.REMOTE_USER }}
+        #     server-ip: ${{ secrets.SERVER_IP }}
+        #     remote-path: /path/to/deployment/directory
+
+    
