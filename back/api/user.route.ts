@@ -2,7 +2,7 @@ import express  , {type Request, type Response}from "express"
 const router = express.Router();
 import dotenv from "dotenv";
 import Users from "../models/users";
-import {userSchema} from "../zod/index";
+import {loginSchema, userSchema} from "../zod/index";
 
 dotenv.config();
 
@@ -11,18 +11,20 @@ dotenv.config();
 router.post("/register", async (req: Request, res: Response) => {
   try {
     const { name, email, password, phone } = userSchema.parse(req.body);
-    const user = new Users(Math.floor(Math.random() * 1000000), name, email, password, parseInt(phone), new Date(), new Date());
-    const newUser = user.createUser(name, email, password, parseInt(phone));
+    const user = new Users(name, email, password, parseInt(phone), new Date(), new Date());
+    const newUser = await user.createUser(name, email, password, parseInt(phone));
     res.status(201).json(newUser);
-  } catch (error: any) {
-    res.status(400).json({ error: error.message });
-  }
+
+  } catch (e: any) {
+  console.error("PG Error:", e.cause?.message ?? e.message ?? e);
+  res.status(500).json({ error: e.cause?.message ?? e.message });
+}
 });
 
 router.post("/login", async (req: Request, res: Response) => {
   try {
-    const { email, password } = userSchema.parse(req.body);
-    const user = new Users(Math.floor(Math.random() * 1000000), "", email, password, 0, new Date(), new Date());
+    const { email, password } = loginSchema.parse(req.body);
+    const user = new Users("", email, password, 0, new Date(), new Date());
     const loggedInUser = await user.loginUser(email);
     if (loggedInUser) {
       res.status(200).json(loggedInUser);
